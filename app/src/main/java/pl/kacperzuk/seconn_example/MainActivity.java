@@ -277,11 +277,10 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
                 if (device.getName().equals(mDevName)) {
                     connectAsClient(device);
                     return;
-                } else {
-                    addState("No paired device.");
                 }
             }
         }
+        addState("No paired device with name: "+mDevName);
     }
 
     private void addState(String st) {
