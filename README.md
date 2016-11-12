@@ -17,3 +17,5 @@ Usage
 3. Run on your device
 4. App will automatically connect to `seconn` device and establish SeConn connection.
 5. After establishing connection (when it says `SeConn state: AUTHENTICATED`). You can start sending messages.
+
+![Example screenshot of application](http://i.imgur.com/yZL2hgc.png)
