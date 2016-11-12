@@ -27,7 +27,7 @@ import pl.kacperzuk.libs.seconn.SeConnHandler;
 
 @SuppressLint("SetTextI18n")
 public class MainActivity extends AppCompatActivity implements SeConnHandler {
-    private static final String mDevName = "Inzynierka";
+    private static final String mDevName = "seconn";
     private static final int MESSAGE_READ = 1;
     private static final int MESSAGE_CONNECTED = 2;
     private static final int MESSAGE_CONNECTION_ERROR = 3;
