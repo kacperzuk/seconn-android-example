@@ -9,32 +9,47 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="pl.kacperzuk.bttyper.MainActivity">
+    tools:context="pl.kacperzuk.seconn_example.MainActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Status: "
-            android:textSize="30sp" />
-
+            android:text="Our pubkey:"/>
         <TextView
-            android:id="@+id/status_tv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="N/A"
-            android:textSize="30sp" />
+            android:id="@+id/ourPubKeyTv"
+            android:text="N/A"/>
     </LinearLayout>
 
-    <View
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Other pubkey:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/otherPubKeyTv"
+            android:text="N/A"/>
+    </LinearLayout>
+
+    <ScrollView
+        android:id="@+id/scroll"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1">
-
-    </View>
+        <TextView
+            android:id="@+id/status_tv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp" />
+    </ScrollView>
 
     <LinearLayout
         android:layout_width="match_parent"

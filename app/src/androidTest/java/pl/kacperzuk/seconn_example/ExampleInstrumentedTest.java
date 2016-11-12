@@ -1,4 +1,4 @@
-package pl.kacperzuk.bttyper;
+package pl.kacperzuk.seconn_example;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

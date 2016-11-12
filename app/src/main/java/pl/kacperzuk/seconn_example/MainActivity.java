@@ -1,4 +1,4 @@
-package pl.kacperzuk.bttyper;
+package pl.kacperzuk.seconn_example;
 
 import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
             } else if (msg.what == MESSAGE_WRITTEN) {
                 return;
             } else if (msg.what == MESSAGE_READ) {
-                byte[] data = (byte[])msg.obj;
+                byte[] data = (byte[]) msg.obj;
                 mSeConn.newData(data);
             } else if (msg.what == MESSAGE_CONNECTION_ERROR) {
                 addState("Connection failed");
@@ -73,7 +73,10 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
 
     @Override
     public void onStateChange(SeConn.State prev_state, SeConn.State cur_state) {
-        addState("New seconn state:"+cur_state);
+        addState("New seconn state:" + cur_state);
+        if (cur_state == SeConn.State.AUTHENTICATED) {
+            ((TextView) findViewById(R.id.otherPubKeyTv)).setText(SeConn.toHex(mSeConn.public_key));
+        }
     }
 
     private class ConnectThread extends Thread {
@@ -174,7 +177,7 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
                     bytes = mmInStream.read(buffer);
                     // Send the obtained bytes to the UI activity
                     mHandler.obtainMessage(MESSAGE_READ, bytes, -1, Arrays.copyOfRange(buffer, 0, bytes))
-                                .sendToTarget();
+                            .sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
                     mHandler.obtainMessage(MESSAGE_DISCONNECTED)
@@ -227,6 +230,7 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
         mSeConn = new SeConn(this);
         setContentView(R.layout.activity_main);
 
+        ((TextView) findViewById(R.id.ourPubKeyTv)).setText(SeConn.toHex(mSeConn.getOurPublicKey()));
 
         mStatusTv = (TextView) findViewById(R.id.status_tv);
         mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
@@ -236,6 +240,8 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
             @Override
             public void onClick(View view) {
                 mSeConn.writeData(msgText.getText().toString().getBytes());
+                addState("Sent " + String.valueOf(msgText.getText().length()) + " bytes");
+                msgText.setText("");
             }
         });
 
@@ -279,7 +285,9 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
     }
 
     private void addState(String st) {
-        mStatusTv.setText(st);
+        String text = mStatusTv.getText().toString();
+        text = ">" + st + "\n\n" + text;
+        mStatusTv.setText(text);
     }
 
     private synchronized void connectAsClient(BluetoothDevice device) {
@@ -298,6 +306,7 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
             mConnectedThread.write(data);
         }
     }
+
     private void send(String text) {
         rawSend((text.trim() + "\n").getBytes());
     }
