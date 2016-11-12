@@ -6,6 +6,7 @@ seconn-android-example is part of SeConn project. It's a protocol and set of lib
 * [seconn](https://github.com/kacperzuk/seconn) - description of design and protocol, you should read it.
 * [seconn-avr](https://github.com/kacperzuk/seconn-avr) - AVR library that implements the SeConn protocol
 * [seconn-java](https://github.com/kacperzuk/seconn-java) - Java library that implements the SeConn protocol
+* [seconn-android-example](https://github.com/kacperzuk/seconn-android-example) - Example Android project that uses seconn-java
 * [seconn-arduino-example](https://github.com/kacperzuk/seconn-arduino-example) - Example Arduino sketch that uses seconn-avr
 
 Usage
