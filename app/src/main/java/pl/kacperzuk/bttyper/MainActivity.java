@@ -25,7 +25,6 @@ import java.util.UUID;
 import pl.kacperzuk.libs.seconn.SeConn;
 import pl.kacperzuk.libs.seconn.SeConnHandler;
 
-
 @SuppressLint("SetTextI18n")
 public class MainActivity extends AppCompatActivity implements SeConnHandler {
     private static final String mDevName = "Inzynierka";
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
     private static final int MESSAGE_CONNECTED = 2;
     private static final int MESSAGE_CONNECTION_ERROR = 3;
     private static final int MESSAGE_WRITTEN = 4;
+    private static final int MESSAGE_DISCONNECTED = 5;
     private static final int REQUEST_ENABLE_BT = 1;
     private static final UUID uuid1 = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");
     private static final UUID uuid2 = UUID.fromString("00000000-0000-1000-8000-00805f9b34fb");
@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
                 mSeConn.newData(data);
             } else if (msg.what == MESSAGE_CONNECTION_ERROR) {
                 addState("Connection failed");
+            } else if (msg.what == MESSAGE_DISCONNECTED) {
+                addState("DISCONNECTED");
             }
         }
     };
@@ -172,10 +174,11 @@ public class MainActivity extends AppCompatActivity implements SeConnHandler {
                     bytes = mmInStream.read(buffer);
                     // Send the obtained bytes to the UI activity
                     mHandler.obtainMessage(MESSAGE_READ, bytes, -1, Arrays.copyOfRange(buffer, 0, bytes))
-                            .sendToTarget();
+                                .sendToTarget();
                 } catch (IOException e) {
                     e.printStackTrace();
-                    addState("DISCONNECTED");
+                    mHandler.obtainMessage(MESSAGE_DISCONNECTED)
+                            .sendToTarget();
                     break;
                 }
             }
